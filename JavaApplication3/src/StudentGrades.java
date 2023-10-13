@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import java.text.*;
 /**
  *
  * @author Amy Zhang
@@ -14,6 +15,19 @@ public class StudentGrades extends javax.swing.JFrame {
     int current = 0; 
     
     //List update
+    public void updateList(){
+        txtList.setText("");
+        for (String[] student : gradesBook){
+            if (student[0] != null){ //use current instead?
+                //will error if name is smaller than 2 letters
+                txtList.append(student[0].substring(0, 1).toUpperCase() + student[0].substring(1) + " " 
+                        + student[1].substring(0, 1).toUpperCase() + student[1].substring(1) + ": " 
+                        + student[2] + "%, " + student[3] + "%, " + student[4] + "%, " + student[5] + "%");
+            }
+        }
+        
+        //name, last name, grade1, grade2, grade3, grade4
+    }
     
     /**
      * Creates new form StudentGrades
@@ -106,33 +120,11 @@ public class StudentGrades extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblTitle)
-                .addGap(138, 138, 138))
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAdd)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblLastName)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtLastName))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblFirstName)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
+                        .addGap(13, 13, 13)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblTest2)
                             .addComponent(lblTest1)
@@ -143,19 +135,30 @@ public class StudentGrades extends javax.swing.JFrame {
                             .addComponent(txtTest3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                             .addComponent(txtTest2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                             .addComponent(txtTest1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTest4, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtTest4, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))
+                    .addComponent(txtAverage, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(16, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtAverage)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnStudentAverage)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnCourseAverages)))
-                        .addGap(12, 12, 12)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnStudentAverage)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCourseAverages))
+                    .addComponent(btnAdd)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblLastName)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtLastName))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblFirstName)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                 .addGap(14, 14, 14))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(197, 197, 197)
+                .addComponent(lblTitle)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,7 +195,7 @@ public class StudentGrades extends javax.swing.JFrame {
                         .addComponent(btnAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblError)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnStudentAverage)
                             .addComponent(btnCourseAverages))
@@ -215,8 +218,8 @@ public class StudentGrades extends javax.swing.JFrame {
             return;
         }
         
-        String firstName = txtFirstName.getText();
-        String lastName = txtLastName.getText();
+        String firstName = txtFirstName.getText().toLowerCase();
+        String lastName = txtLastName.getText().toLowerCase();
         String test1 = txtTest1.getText();
         String test2 = txtTest2.getText();
         String test3 = txtTest3.getText();
@@ -231,21 +234,26 @@ public class StudentGrades extends javax.swing.JFrame {
         //check if repeat
         for (String[] student : gradesBook){
             if (firstName.equals(student[0]) && lastName.equals(student[1])) {
-                lblError.setText("Student already exists");   
+                lblError.setText("Student already exists"); 
+                return;
             }
         }
         
         //check numbers
         try {
-            if (Double.parseDouble(txtTest1.getText()) > 100 || Double.parseDouble(txtTest1.getText()) <= 0) throw new NumberFormatException;
-            if (Double.parseDouble(txtTest2.getText()) > 100 || Double.parseDouble(txtTest2.getText()) <= 0) throw new NumberFormatException;
-            Double.parseDouble(txtTest3.getText());
-            Double.parseDouble(txtTest4.getText());
+            double dblTest1 = Double.parseDouble(txtTest1.getText());
+            double dblTest2 = Double.parseDouble(txtTest2.getText());
+            double dblTest3 = Double.parseDouble(txtTest3.getText());
+            double dblTest4 = Double.parseDouble(txtTest4.getText());
+            if (dblTest1 > 100 || dblTest1 < 0 || dblTest2 > 100 || dblTest2 < 0 || dblTest3 > 100 || dblTest3 < 0 || dblTest4 > 100 || dblTest4 < 0) {
+            lblError.setText("You must enter a number between 0-100 for the grades");
+            return;
+            }
         } catch(NumberFormatException e){
             lblError.setText("You must enter a number for the grades");   
             return;
         }
-        
+            
         //add to array
         gradesBook[current][0] = firstName;
         gradesBook[current][1] = lastName;
@@ -253,17 +261,45 @@ public class StudentGrades extends javax.swing.JFrame {
         gradesBook[current][3] = test2;
         gradesBook[current][4] = test3;
         gradesBook[current][5] = test4;
+        current++;
+        
+        updateList();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnStudentAverageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentAverageActionPerformed
-        //check first and last valid
-        //exists?
-        //convert and calculate grades
+        DecimalFormat df2 = new DecimalFormat("0.00");
+        
+        String firstName = txtFirstName.getText().toLowerCase();
+        String lastName = txtLastName.getText().toLowerCase();
+        
+        //check empty/valid values
+        if (firstName.equals("") || lastName.equals("")){
+            lblError.setText("You left a required piece of information empty");   
+            return;
+        }
+        
+        //check if exists
+        for (String[] student : gradesBook){
+            if (firstName.equals(student[0]) && lastName.equals(student[1])) {
+                txtAverage.setText(student[0] + " " + student[1] + "\'s average is " +
+                        df2.format((Double.parseDouble(student[2]) + Double.parseDouble(student[3]) + Double.parseDouble(student[4]) + Double.parseDouble(student[5])) / 4) + "%");
+                return;
+            }
+        }
+        lblError.setText("Student does not exist");         
     }//GEN-LAST:event_btnStudentAverageActionPerformed
 
     private void btnCourseAveragesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCourseAveragesActionPerformed
         //loop through each student and to total
+        double total = 0;
+        
+        for (String[] student : gradesBook){
+            if (student[0] != null){ //use current instaed
+                total += Double.parseDouble(student[2]) + Double.parseDouble(student[3]) + Double.parseDouble(student[4]) + Double.parseDouble(student[5]);
+            }
+        }
         //divide by total students
+        txtAverage.setText("Course average is: " + (total / (current * 4)) + "%");
     }//GEN-LAST:event_btnCourseAveragesActionPerformed
 
     /**
