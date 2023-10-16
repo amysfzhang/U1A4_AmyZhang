@@ -22,7 +22,7 @@ public class StudentGrades extends javax.swing.JFrame {
                 //will error if name is smaller than 2 letters
                 txtList.append(student[0].substring(0, 1).toUpperCase() + student[0].substring(1) + " " 
                         + student[1].substring(0, 1).toUpperCase() + student[1].substring(1) + ": " 
-                        + student[2] + "%, " + student[3] + "%, " + student[4] + "%, " + student[5] + "%");
+                        + student[2] + "%, " + student[3] + "%, " + student[4] + "%, " + student[5] + "%\n");
             }
         }
         
@@ -116,6 +116,8 @@ public class StudentGrades extends javax.swing.JFrame {
         lblError.setForeground(new java.awt.Color(255, 0, 0));
         lblError.setText(" ");
 
+        txtAverage.setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,16 +144,15 @@ public class StudentGrades extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnCourseAverages))
                     .addComponent(btnAdd)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
+                    .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblLastName)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtLastName))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblFirstName)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblFirstName))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtFirstName)
+                            .addComponent(txtLastName))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                 .addGap(14, 14, 14))
@@ -209,21 +210,14 @@ public class StudentGrades extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        
-        lblError.setText("");
-
         //check if at capacity
         if (current == 30){
             lblError.setText("The class is at capacity");
             return;
         }
         
-        String firstName = txtFirstName.getText().toLowerCase();
-        String lastName = txtLastName.getText().toLowerCase();
-        String test1 = txtTest1.getText();
-        String test2 = txtTest2.getText();
-        String test3 = txtTest3.getText();
-        String test4 = txtTest4.getText();
+        String firstName = txtFirstName.getText().toLowerCase(), lastName = txtLastName.getText().toLowerCase();
+        String test1 = txtTest1.getText(), test2 = txtTest2.getText(), test3 = txtTest3.getText(), test4 = txtTest4.getText();
         
         //check empty/valid values
         if (firstName.equals("") || lastName.equals("") || test1.equals("") || test2.equals("") || test3.equals("") || test4.equals("")){
@@ -264,13 +258,21 @@ public class StudentGrades extends javax.swing.JFrame {
         current++;
         
         updateList();
+        //Clearing textfields
+        lblError.setText("");
+        txtFirstName.setText("");
+        txtLastName.setText("");
+        txtTest1.setText("");
+        txtTest2.setText("");
+        txtTest3.setText("");
+        txtTest4.setText("");
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnStudentAverageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentAverageActionPerformed
         DecimalFormat df2 = new DecimalFormat("0.00");
+        String firstName = txtFirstName.getText().toLowerCase(), lastName = txtLastName.getText().toLowerCase();
         
-        String firstName = txtFirstName.getText().toLowerCase();
-        String lastName = txtLastName.getText().toLowerCase();
+        lblError.setText("");
         
         //check empty/valid values
         if (firstName.equals("") || lastName.equals("")){
@@ -281,7 +283,8 @@ public class StudentGrades extends javax.swing.JFrame {
         //check if exists
         for (String[] student : gradesBook){
             if (firstName.equals(student[0]) && lastName.equals(student[1])) {
-                txtAverage.setText(student[0] + " " + student[1] + "\'s average is " +
+                txtAverage.setText(student[0].substring(0, 1).toUpperCase() + student[0].substring(1) + " " 
+                        + student[1].substring(0, 1).toUpperCase() + student[1].substring(1) + "\'s average is " +
                         df2.format((Double.parseDouble(student[2]) + Double.parseDouble(student[3]) + Double.parseDouble(student[4]) + Double.parseDouble(student[5])) / 4) + "%");
                 return;
             }
@@ -290,16 +293,17 @@ public class StudentGrades extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStudentAverageActionPerformed
 
     private void btnCourseAveragesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCourseAveragesActionPerformed
-        //loop through each student and to total
+        DecimalFormat df2 = new DecimalFormat("0.00");lblError.setText("");
         double total = 0;
         
+        //loop through each student and to total
         for (String[] student : gradesBook){
             if (student[0] != null){ //use current instaed
                 total += Double.parseDouble(student[2]) + Double.parseDouble(student[3]) + Double.parseDouble(student[4]) + Double.parseDouble(student[5]);
             }
         }
         //divide by total students
-        txtAverage.setText("Course average is: " + (total / (current * 4)) + "%");
+        txtAverage.setText("Course average is: " + df2.format(total / (current * 4)) + "%");
     }//GEN-LAST:event_btnCourseAveragesActionPerformed
 
     /**
