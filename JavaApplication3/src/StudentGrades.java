@@ -303,7 +303,11 @@ public class StudentGrades extends javax.swing.JFrame {
             }
         }
         //divide by total students
-        txtAverage.setText("Course average is: " + df2.format(total / (current * 4)) + "%");
+        if (current > 0){
+            txtAverage.setText("Course average is: " + df2.format(total / (current * 4)) + "%");
+        } else {
+            lblError.setText("No students entered");
+        }
     }//GEN-LAST:event_btnCourseAveragesActionPerformed
 
     /**
